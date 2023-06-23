@@ -1,9 +1,29 @@
 <template>
   <v-app class="app-container" :style="{ backgroundPosition: `${mouseX}px ${mouseY}px` }" @mousemove="handleMouseMove">
     <div class="calculator-wrapper">
-      <v-container fluid class="calculator">
+
+      <div class="w-full rounded m-1 p-3 text-end lead fw-bold text-white bg-vue-dark">
+      {{ calcVal || 0}}
+      </div>
+
+      <div class="row g-0">
+      <div class="col-3" v-for="btn in calcBtns" :key="btn">
+        <div 
+        class="lead text-white text-center m-1 py-3 bg-vue-dark rounded btn-hover"
+        :class="{'bg-vue-green': ['C', '*', '/', '+', '-', '=', '%'].includes(btn)}"
+        @click="action(btn)"
+          >
+          {{ btn }}
+        </div>
+      </div>
+    </div>
+
+      <!-- <v-container fluid class="calculator">
         <v-row justify="center">
-          <v-text-field class="text-field" rounded v-model="text" placeholder="Give Me Some Problems....."></v-text-field>
+          <div class="text-field-container">
+            <v-text-field v-model="myNumber" label="Enter number" hide-details outlined type="number" hide-spin-buttons :class="['text-field']"></v-text-field>
+          </div>
+          <v-spacer></v-spacer>
         </v-row>
         <v-row justify="center">
         <v-cols cols="12" sm="8" md="6" style="">
@@ -40,7 +60,7 @@
           <v-btn variant="outlined" color="black" style="background-color: white;border-width: 5px;">.</v-btn>
         </v-cols>
       </v-row>
-    </v-container>
+    </v-container> -->
     </div>
   </v-app>
 </template>
@@ -59,7 +79,11 @@ export default {
     return {
       animateBackground: false,
       mouseX: 0,
-      mouseY: 0
+      mouseY: 0,
+      calcVal: '',
+      calcBtns: ['C', '%', '=', '+', 7, 8, 9,'-', 4, 5, 6,'*', 1, 2, 3, '/', 0, '.'],
+      operators: null,
+      prevCalcVal: '',
     };
   },
   methods: {
@@ -77,6 +101,11 @@ export default {
 
 <style scoped>
 
+.btn-hover:hover{
+  cursor: pointer;
+  background: #3D5875;
+}
+
 .app-container {
     background-image: url('./assets/bg.svg');
     background-size: 130%, 130%;
@@ -93,12 +122,12 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: white;
-  height: fit-content;
-  width: fit-content;
+  height: max-content;
+  width: max-content;
   align-self: center;
 }
 
-.text-field{
-  border-radius: 20px;
+.text-field-container{
+  border-radius: px;
 }
 </style>
