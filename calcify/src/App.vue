@@ -1,16 +1,15 @@
 <template>
   <v-app class="app-container" :style="{ backgroundPosition: `${mouseX}px ${mouseY}px` }" @mousemove="handleMouseMove">
     <div class="header" style="display: flex; align-items: center; justify-content: center;">
-  <v-img src="./assets/calciFyLogo.png" contain max-height="70" max-width="70"></v-img>
-  <h1 style="position: relative; color: white; text-align: center; margin-top: 10px;">ⒸⓐⓛⓒⓘⒻⓨ</h1>
+  <v-img src="./assets/calciFyLogo.png" contain max-height="70" max-width="70" style="margin-top: 10px;"></v-img>
+  <h1 style="position: relative; color: white; text-align: center; margin-top: 20px;stroke: black;stroke-width: 2px;">𝓒𝓪𝓵𝓬𝓲𝓕𝔂</h1>
 </div>
-    
-    <!-- <div class="p-3"> -->
-      <div class="calculator">
+    <div class="container" style="display: flex;">
+      <div class="calculator" style="display: flex;">
   <div class="button-container">
-  <div :class="['w-full', 'm-1', 'p-3', 'text-end', 'lead', 'fw-bold', 'text-white', 'bg-vue-dark',  {'error-shake': showError }]" style="height: 60px; margin-bottom: 20px;flex-basis: 87.5%;font-size: 20px;border: solid 2px grey; border-radius: 15px;background-color: rgb(228, 225, 225);">
-    <h6 class="expression" style="color: rgb(68, 66, 66);margin-right: 5px;">{{ expression || null }}</h6>
-    <h2 class="input" style="margin-right: 5px;color: black;">{{ calcVal || 0 }}</h2>
+  <div :class="['w-full', 'm-1', 'p-3', 'text-end', 'lead', 'fw-bold', 'text-white', 'bg-vue-dark',  {'error-shake': showError }]" style="height: 60px; margin-bottom: 20px;margin-top: 10px;flex-basis: 87.5%;font-size: 20px;border: solid 2px grey; border-radius: 15px;background-color: rgb(228, 225, 225);">
+    <h6 class="expression" style="color: rgb(68, 66, 66);margin-right: 5px;overflow: hidden;">{{ expression || null }}</h6>
+    <h3 class="input" style="margin-right: 5px;color: black;overflow: hidden;">{{ calcVal || 0 }}</h3>
   </div>
     <div class="button" v-for="btn in calcBtns" :key="btn">
       <div
@@ -21,14 +20,23 @@
         {{ btn }}
       </div>
     </div>
+    <div class="lead text-center m-1 py-3 bg-vue-dark rounded btn-hover button" style="color: #31475e;"></div>
+    <div class="lead text-center m-1 py-3 bg-vue-dark rounded btn-hover button" style="color: #31475e;"></div>
   </div>
       </div>
       <footer class="footer">
   <div class="footer-content">
-    <p class="footerText">Made by</p>
-    <p class="footer-text">𝓡𝓸𝓱𝓲𝓽 𝓚𝓚</p>
+    <h4 style="color:#0d1925">.....</h4>
+    <div class="textContainer" style="display: inline-flex;">
+      <p class="footerText">Made by</p>
+      <h4 style="color:#0d1925">..</h4>
+    <p class="footer-text" @click="goToGithubProfile">𝓡𝓸𝓱𝓲𝓽 𝓚𝓚</p>
+    </div>
+    <i class="fab fa-github" @click="goToGithubRepo"></i>
   </div>
 </footer>
+    </div>
+    
   </v-app>
 </template>
 
@@ -47,7 +55,7 @@ export default {
       mouseX: 0,
       mouseY: 0,
       calcVal: '',
-      calcBtns: ['C', '%', '=', '+', 7, 8, 9,'-', 4, 5, 6,'*', 1, 2, 3, '/', 'as', 0, '.', 'as'],
+      calcBtns: ['C', '%', '=', '+', 7, 8, 9,'-', 4, 5, 6,'*', 1, 2, 3, '/', 0, '.'],
       operators: null,
       prevCalcVal: '',
       expression:'',
@@ -101,14 +109,20 @@ export default {
       catch(error){
         this.addShakeAnimation()
         this.calcVal="🤦‍♂️"
-        this.expression = ''
+        this.expression = '*ERROR*'
       }
     },
     handleMouseMove(event) {
       // Update the mouse cursor coordinates
       this.mouseX = event.clientX*-1/60;
       this.mouseY = event.clientY*-1/60;
-    }
+    },
+    goToGithubProfile(){
+      window.open("https://github.com/Rohit-KK15", "_blank")
+    },
+    goToGithubRepo(){
+      window.open("https://github.com/Rohit-KK15/Calcify", "_blank")
+    },
   },
 }
 </script>
@@ -140,7 +154,8 @@ export default {
   display: flex; 
   flex-wrap: wrap; 
   justify-content: center; 
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
   margin: 160px auto;
   background-color: #234;
   border-radius: 10px;
@@ -192,24 +207,14 @@ export default {
   padding-left: 20px;
   padding-right: 20px;
   text-align: center;
-  position: relative;
-}
-
-.footer:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: fixed;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
-  z-index: -1;
+  width: 100%;
 }
 
 .footer-content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
   gap: 10px;
@@ -230,7 +235,77 @@ export default {
 .footerText {
   font-size: 20px;
   color: rgb(255, 255, 255);
-  margin: 0;
+
 }
 
+.fa-github{
+  color: aliceblue;
+  cursor: pointer;
+  font-size: 30px;
+  transition: transform 0.3s ease;
+}
+
+.fa-github:hover{
+  transform: translateY(-3px);
+}
+
+@media screen and (max-width: 768px) {
+  .calculator {
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%; /* Adjusted width to be responsive */
+  max-width: 500px; /* Added a max-width for larger screens */
+  margin: 160px auto;
+  background-color: #234;
+  border-radius: 10px;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Modified to center the buttons */
+  gap: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.button {
+  flex-basis: 21%;
+  box-sizing: border-box;
+}
+
+.p-3 {
+  width: 100%; /* Adjusted width to be responsive */
+  max-width: 500px; /* Added a max-width for larger screens */
+  background-color: #234;
+  border-radius: 10px;
+}
+
+.error-shake {
+  animation: shake 0.2s;
+  animation-iteration-count: 2;
+}
+  /* Styles for screens up to 768px width (e.g., tablets and smaller screens) */
+  .calculator { /* Adjusted width to be full-width */
+    max-width: 300px; /* Removed max-width */
+    margin: 100px auto; /* Adjusted margin */
+  }
+
+  .button-container {
+    justify-content: center; /* Center the buttons */
+    margin-left: 0; /* Remove the left margin */
+    margin-right: 0; /* Remove the right margin */
+    margin-top: 10px; /* Adjust the top margin */
+    margin-bottom: 10px; /* Adjust the bottom margin */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.button {
+  flex-basis: 21%;
+  box-sizing: border-box;
+}
+}
 </style>
