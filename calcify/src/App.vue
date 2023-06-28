@@ -14,14 +14,14 @@
     <div class="button" v-for="btn in calcBtns" :key="btn">
       <div
         class="lead text-white text-center m-1 py-3 bg-vue-dark rounded btn-hover"
-        :class="{'bg-vue-green': ['C', '*', '/', '+', '-', '=', '%'].includes(btn)}"
-        @click="action(btn)"
+        :class="{'bg-vue-green': ['C', '*', '/', '+', '-','←', '%', '='].includes(btn)}"
+        @click="action(btn)" style="height: 100%;"
       >
         {{ btn }}
       </div>
     </div>
-    <div class="lead text-center m-1 py-3 bg-vue-dark rounded btn-hover button" style="color: #31475e;"></div>
-    <div class="lead text-center m-1 py-3 bg-vue-dark rounded btn-hover button" style="color: #31475e;"></div>
+    <!-- <div class="lead text-center m-1 py-3 bg-vue-dark rounded btn-hover button" style="color: #31475e;"></div>
+    <div class="lead text-center m-1 py-3 bg-vue-dark rounded btn-hover button" style="color: #31475e;"></div> -->
   </div>
       </div>
       <footer class="footer">
@@ -55,7 +55,7 @@ export default {
       mouseX: 0,
       mouseY: 0,
       calcVal: '',
-      calcBtns: ['C', '%', '=', '+', 7, 8, 9,'-', 4, 5, 6,'*', 1, 2, 3, '/', 0, '.'],
+      calcBtns: ['C', '%', '+', '←', 7, 8, 9,'-', 4, 5, 6,'*', 1, 2, 3, '/', 0, '.', '', '='],
       operators: null,
       prevCalcVal: '',
       expression:'',
@@ -70,9 +70,24 @@ export default {
       this.showError = false;
     },
     action(btn){
+      this.removeShakeAnimation()
       try{
         if(this.calcVal != '🤦‍♂️'){
           this.removeShakeAnimation()
+        }
+        if(btn == '←'){
+          if(this.calcVal != ''){
+            if(this.calcVal == '🤦‍♂️'){
+              this.calcVal = '';
+              this.expression = '';
+            }
+            else{
+              this.calcVal = this.calcVal.slice(0, -1);
+            }
+          }
+          else{
+            this.addShakeAnimation()
+          }
         }
         if(!isNaN(btn) || btn === '.')
       {
