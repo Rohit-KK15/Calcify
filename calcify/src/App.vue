@@ -76,14 +76,11 @@ export default {
         }
         if(!isNaN(btn) || btn === '.')
       {
-        if(this.calcVal == '🤦‍♂️'){
+        if(this.calcVal == '🤦‍♂️' || this.calcVal == ''){
           this.calcVal = btn +''
         }else{
           this.calcVal += btn +''
         }
-        if(this.expression != ''){
-            this.expression += this.calcVal;
-          }
       }
       if (btn === 'C') {
         this.calcVal = ''
@@ -100,6 +97,7 @@ export default {
         this.calcVal = ''
       }
       if (btn === "=") {
+        this.expression += this.calcVal
           this.calcVal = eval(
             this.prevCalcVal + this.operators + this.calcVal
             )
